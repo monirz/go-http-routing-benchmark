@@ -22,6 +22,7 @@ import (
 	"github.com/astaxie/beego/context"
 	"github.com/bmizerany/pat"
 	"github.com/go-playground/lars"
+	"github.com/monirz/track"
 
 	// "github.com/daryl/zeus"
 	cloudykitrouter "github.com/cloudykit/router"
@@ -350,6 +351,63 @@ func loadBoneSingle(method, path string, handler http.Handler) http.Handler {
 		panic("Unknow HTTP method: " + method)
 	}
 	return router
+}
+
+//track
+//track
+func trackHandlerWrite(w http.ResponseWriter, r *http.Request) {
+	// fmt.Println("debug ", r.Context().Value("name").(string))
+
+	// io.WriteString(w, r.Context().Value("name").(string))
+}
+
+func loadTrack(routes []route) http.Handler {
+	h := httpHandlerFunc
+	if loadTestHandler {
+		h = httpHandlerFuncTest
+	}
+
+	re := regexp.MustCompile(":([^/]*)")
+
+	mux := track.New()
+	for _, route := range routes {
+		path := re.ReplaceAllString(route.path, ":$1")
+
+		switch route.method {
+		case "GET":
+			mux.Get(path, h)
+		case "POST":
+			mux.Post(path, h)
+		case "PUT":
+			mux.Put(path, h)
+		case "PATCH":
+			mux.Patch(path, h)
+		case "DELETE":
+			mux.Delete(path, h)
+		default:
+			panic("Unknown HTTP method: " + route.method)
+		}
+	}
+	return mux
+}
+
+func loadTrackSingle(method, path string, handler http.HandlerFunc) http.Handler {
+	mux := track.New()
+	switch method {
+	case "GET":
+		mux.Get(path, handler)
+	case "POST":
+		mux.Post(path, handler)
+	case "PUT":
+		mux.Put(path, handler)
+	case "PATCH":
+		mux.Patch(path, handler)
+	case "DELETE":
+		mux.Delete(path, handler)
+	default:
+		panic("Unknown HTTP method: " + method)
+	}
+	return mux
 }
 
 // chi

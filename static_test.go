@@ -166,18 +166,19 @@ var staticRoutes = []route{
 	{"GET", "/progs/slices.go"},
 	{"GET", "/progs/timeout1.go"},
 	{"GET", "/progs/timeout2.go"},
-	{"GET", "/progs/update.bash"},
+	// {"GET", "/progs/update.bash"},
 }
 
 var (
 	staticHttpServeMux http.Handler
 
-	staticAce             http.Handler
-	staticAero            http.Handler
-	staticBear            http.Handler
-	staticBeego           http.Handler
-	staticBone            http.Handler
-	staticChi             http.Handler
+	staticAce   http.Handler
+	staticAero  http.Handler
+	staticBear  http.Handler
+	staticBeego http.Handler
+	staticBone  http.Handler
+	staticChi   http.Handler
+	// staticTrack           http.Handler
 	staticCloudyKitRouter http.Handler
 	staticDenco           http.Handler
 	staticEcho            http.Handler
@@ -236,6 +237,11 @@ func init() {
 	calcMem("Chi", func() {
 		staticChi = loadChi(staticRoutes)
 	})
+
+	// calcMem("Track", func() {
+	// 	staticTrack = loadTrack(staticRoutes)
+	// })
+
 	calcMem("CloudyKitRouter", func() {
 		staticCloudyKitRouter = loadCloudyKitRouter(staticRoutes)
 	})
@@ -344,6 +350,11 @@ func BenchmarkBone_StaticAll(b *testing.B) {
 func BenchmarkChi_StaticAll(b *testing.B) {
 	benchRoutes(b, staticChi, staticRoutes)
 }
+
+// func BenchmarkTrack_StaticAll(b *testing.B) {
+// 	benchRoutes(b, staticTrack, staticRoutes)
+// }
+
 func BenchmarkCloudyKitRouter_StaticAll(b *testing.B) {
 	benchRoutes(b, staticCloudyKitRouter, staticRoutes)
 }

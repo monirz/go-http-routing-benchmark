@@ -42,6 +42,7 @@ var (
 	gplusBeego           http.Handler
 	gplusBone            http.Handler
 	gplusChi             http.Handler
+	gplusTrack           http.Handler
 	gplusCloudyKitRouter http.Handler
 	gplusDenco           http.Handler
 	gplusEcho            http.Handler
@@ -92,6 +93,7 @@ func init() {
 	calcMem("Chi", func() {
 		gplusChi = loadChi(gplusAPI)
 	})
+
 	calcMem("CloudyKitRouter", func() {
 		gplusCloudyKitRouter = loadCloudyKitRouter(gplusAPI)
 	})
@@ -164,6 +166,10 @@ func init() {
 	calcMem("TigerTonic", func() {
 		gplusTigerTonic = loadTigerTonic(gplusAPI)
 	})
+	calcMem("Track", func() {
+		gplusTrack = loadTrack(gplusAPI)
+	})
+
 	calcMem("Traffic", func() {
 		gplusTraffic = loadTraffic(gplusAPI)
 	})
@@ -201,6 +207,11 @@ func BenchmarkBone_GPlusStatic(b *testing.B) {
 func BenchmarkChi_GPlusStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people", nil)
 	benchRequest(b, gplusChi, req)
+}
+
+func BenchmarkTrack_GPlusStatic(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/people", nil)
+	benchRequest(b, gplusTrack, req)
 }
 func BenchmarkCloudyKitRouter_GPlusStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people", nil)
@@ -338,6 +349,7 @@ func BenchmarkChi_GPlusParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people/118051310819094153327", nil)
 	benchRequest(b, gplusChi, req)
 }
+
 func BenchmarkCloudyKitRouter_GPlusParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people/118051310819094153327", nil)
 	benchRequest(b, gplusCloudyKitRouter, req)
@@ -435,6 +447,11 @@ func BenchmarkTigerTonic_GPlusParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people/118051310819094153327", nil)
 	benchRequest(b, gplusTigerTonic, req)
 }
+
+func BenchmarkTrack_GPlusParam(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/people/118051310819094153327", nil)
+	benchRequest(b, gplusTrack, req)
+}
 func BenchmarkTraffic_GPlusParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people/118051310819094153327", nil)
 	benchRequest(b, gplusTraffic, req)
@@ -474,6 +491,7 @@ func BenchmarkChi_GPlus2Params(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people/118051310819094153327/activities/123456789", nil)
 	benchRequest(b, gplusChi, req)
 }
+
 func BenchmarkCloudyKitRouter_GPlus2Params(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people/118051310819094153327/activities/123456789", nil)
 	benchRequest(b, gplusCloudyKitRouter, req)
@@ -571,6 +589,12 @@ func BenchmarkTigerTonic_GPlus2Params(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people/118051310819094153327/activities/123456789", nil)
 	benchRequest(b, gplusTigerTonic, req)
 }
+
+func BenchmarkTrack_GPlus2Params(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/people/118051310819094153327/activities/123456789", nil)
+	benchRequest(b, gplusTrack, req)
+}
+
 func BenchmarkTraffic_GPlus2Params(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/people/118051310819094153327/activities/123456789", nil)
 	benchRequest(b, gplusTraffic, req)
@@ -604,6 +628,7 @@ func BenchmarkBone_GPlusAll(b *testing.B) {
 func BenchmarkChi_GPlusAll(b *testing.B) {
 	benchRoutes(b, gplusChi, gplusAPI)
 }
+
 func BenchmarkCloudyKitRouter_GPlusAll(b *testing.B) {
 	benchRoutes(b, gplusCloudyKitRouter, gplusAPI)
 }
@@ -676,6 +701,10 @@ func BenchmarkTango_GPlusAll(b *testing.B) {
 }
 func BenchmarkTigerTonic_GPlusAll(b *testing.B) {
 	benchRoutes(b, gplusTigerTonic, gplusAPI)
+}
+
+func BenchmarkTrack_GPlusAll(b *testing.B) {
+	benchRoutes(b, gplusTrack, gplusAPI)
 }
 func BenchmarkTraffic_GPlusAll(b *testing.B) {
 	benchRoutes(b, gplusTraffic, gplusAPI)

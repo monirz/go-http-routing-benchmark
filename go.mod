@@ -32,6 +32,7 @@ require (
 	github.com/lunny/tango v0.5.6
 	github.com/mailgun/route v0.0.0-20181101151700-58b44163b968
 	github.com/mikespook/possum v0.0.0-20170224044927-56d7ebb6470b
+	github.com/monirz/track v0.0.0-20200305085331-d37812bef401
 	github.com/naoina/denco v0.0.0-20180930074809-8475105a6b4c
 	github.com/naoina/kocha-urlrouter v0.0.0-20140609163054-ad3a6f079210
 	github.com/oxtoacart/bpool v0.0.0-20190530202638-03653db5a59c // indirect
@@ -61,3 +62,5 @@ require (
 	gopkg.in/ini.v1 v1.48.0 // indirect
 	gopkg.in/macaron.v1 v1.3.4
 )
+
+replace github.com/monirz/track v0.0.0-20200305085331-d37812bef401 => /home/monir/gocode/src/github.com/monirz/track

@@ -280,6 +280,7 @@ var (
 	githubBeego           http.Handler
 	githubBone            http.Handler
 	githubChi             http.Handler
+	githubTrack           http.Handler
 	githubCloudyKitRouter http.Handler
 	githubDenco           http.Handler
 	githubEcho            http.Handler
@@ -330,6 +331,10 @@ func init() {
 	calcMem("Chi", func() {
 		githubChi = loadChi(githubAPI)
 	})
+	calcMem("Track", func() {
+		githubTrack = loadTrack(githubAPI)
+	})
+
 	calcMem("CloudyKitRouter", func() {
 		githubCloudyKitRouter = loadCloudyKitRouter(githubAPI)
 	})
@@ -443,6 +448,11 @@ func BenchmarkCloudyKitRouter_GithubStatic(b *testing.B) {
 func BenchmarkChi_GithubStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/user/repos", nil)
 	benchRequest(b, githubChi, req)
+}
+
+func BenchmarkTrack_GithubStatic(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/user/repos", nil)
+	benchRequest(b, githubTrack, req)
 }
 func BenchmarkDenco_GithubStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/user/repos", nil)
@@ -576,6 +586,11 @@ func BenchmarkChi_GithubParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/repos/julienschmidt/httprouter/stargazers", nil)
 	benchRequest(b, githubChi, req)
 }
+
+func BenchmarkTrack_GithubParam(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/repos/julienschmidt/httprouter/stargazers", nil)
+	benchRequest(b, githubTrack, req)
+}
 func BenchmarkCloudyKitRouter_GithubParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/repos/julienschmidt/httprouter/stargazers", nil)
 	benchRequest(b, githubCloudyKitRouter, req)
@@ -705,6 +720,10 @@ func BenchmarkBone_GithubAll(b *testing.B) {
 }
 func BenchmarkChi_GithubAll(b *testing.B) {
 	benchRoutes(b, githubChi, githubAPI)
+}
+
+func BenchmarkTrack_GithubAll(b *testing.B) {
+	benchRoutes(b, githubTrack, githubAPI)
 }
 func BenchmarkCloudyKitRouter_GithubAll(b *testing.B) {
 	benchRoutes(b, githubCloudyKitRouter, githubAPI)

@@ -86,6 +86,7 @@ var (
 	parseRivet           http.Handler
 	parseTango           http.Handler
 	parseTigerTonic      http.Handler
+	parseTrack           http.Handler
 	parseTraffic         http.Handler
 	parseVulcan          http.Handler
 	// parseZeus        http.Handler
@@ -112,6 +113,7 @@ func init() {
 	calcMem("Chi", func() {
 		parseChi = loadChi(parseAPI)
 	})
+
 	calcMem("Denco", func() {
 		parseDenco = loadDenco(parseAPI)
 	})
@@ -181,6 +183,11 @@ func init() {
 	calcMem("TigerTonic", func() {
 		parseTigerTonic = loadTigerTonic(parseAPI)
 	})
+
+	calcMem("Track", func() {
+		parseTrack = loadTrack(parseAPI)
+	})
+
 	calcMem("Traffic", func() {
 		parseTraffic = loadTraffic(parseAPI)
 	})
@@ -219,6 +226,7 @@ func BenchmarkChi_ParseStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/users", nil)
 	benchRequest(b, parseChi, req)
 }
+
 func BenchmarkCloudyKitRouter_ParseStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/users", nil)
 	benchRequest(b, parseCloudyKitRouter, req)
@@ -316,6 +324,12 @@ func BenchmarkTigerTonic_ParseStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/users", nil)
 	benchRequest(b, parseTigerTonic, req)
 }
+
+func BenchmarkTrack_ParseStatic(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/1/users", nil)
+	benchRequest(b, parseTrack, req)
+}
+
 func BenchmarkTraffic_ParseStatic(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/users", nil)
 	benchRequest(b, parseTraffic, req)
@@ -354,6 +368,11 @@ func BenchmarkBone_ParseParam(b *testing.B) {
 func BenchmarkChi_ParseParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/classes/go", nil)
 	benchRequest(b, parseChi, req)
+}
+
+func BenchmarkTrack_ParseParam(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/1/classes/go", nil)
+	benchRequest(b, parseTrack, req)
 }
 func BenchmarkCloudyKitRouter_ParseParam(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/classes/go", nil)
@@ -491,6 +510,11 @@ func BenchmarkChi_Parse2Params(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/classes/go/123456789", nil)
 	benchRequest(b, parseChi, req)
 }
+
+func BenchmarkTrack_Parse2Params(b *testing.B) {
+	req, _ := http.NewRequest("GET", "/1/classes/go/123456789", nil)
+	benchRequest(b, parseTrack, req)
+}
 func BenchmarkCloudyKitRouter_Parse2Params(b *testing.B) {
 	req, _ := http.NewRequest("GET", "/1/classes/go/123456789", nil)
 	benchRequest(b, parseCloudyKitRouter, req)
@@ -620,6 +644,10 @@ func BenchmarkBone_ParseAll(b *testing.B) {
 }
 func BenchmarkChi_ParseAll(b *testing.B) {
 	benchRoutes(b, parseChi, parseAPI)
+}
+
+func BenchmarkTrack_ParseAll(b *testing.B) {
+	benchRoutes(b, parseTrack, parseAPI)
 }
 func BenchmarkCloudyKitRouter_ParseAll(b *testing.B) {
 	benchRoutes(b, parseCloudyKitRouter, parseAPI)

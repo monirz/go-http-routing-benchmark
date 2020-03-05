@@ -42,6 +42,7 @@ var (
 		{"Rivet", loadRivet},
 		//{"Tango", loadTango},
 		{"TigerTonic", loadTigerTonic},
+		{"Track", loadTrack},
 		{"Traffic", loadTraffic},
 		{"Vulcan", loadVulcan},
 		// {"Zeus", loadZeus},
@@ -55,7 +56,7 @@ var (
 		{"GitHub", githubAPI},
 		{"GPlus", gplusAPI},
 		{"Parse", parseAPI},
-		{"Static", staticRoutes},
+		// {"Static", staticRoutes},
 	}
 )
 
